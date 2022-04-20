@@ -5,12 +5,16 @@ jobs:
   install-node-example:
     docker:
       - image: 'cimg/base:stable'
+    working_directory: '~/repo'
     steps:
       - checkout
+      # Download and Cache dependency
+        
       - node/install:
           install-yarn: true
           node-version: '16.13'
-      - run: node --version
+      - run: yarn ng build --prod
+      - run: yarn ng test --single-run
 workflows:
   test_my_app:
     jobs:
